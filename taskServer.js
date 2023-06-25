@@ -41,7 +41,7 @@ app.route('/task/:user')
                 if (result) {
                     res.send(result)
                 } else {
-                    res.send("no result found")
+                    res.send({result : 'fail'})
                 }
             })
     })
@@ -57,10 +57,10 @@ app.route('/task/:user')
             .then((result, err) => {
                 if (err) {
                     console.log("----------Error---------\n" + err);
-                    res.send("----------Error---------\n" + err);
+                    res.send({result : "fail"});
                 } else {
                     console.log("Post Successful");
-                    res.send("Post Successful");
+                    res.send({result : "success"});
                 }
             })
 
@@ -70,7 +70,7 @@ app.route('/task/:user')
         const user = req.params.user
         Task.deleteMany({ username: user })
             .then((result) => {
-                res.send("deleted successfully");
+                res.send({result : "success"});
             })
     })
 
@@ -80,7 +80,7 @@ app.route("/task/:user/:work")
         const work = req.params.work
         Task.deleteOne({ username: user, task: work })
             .then((result) => {
-                res.send("deleted successfully");
+                res.send({result : "success"});
             })
     })
 
@@ -96,11 +96,11 @@ app.route("/task/:user/:work")
             { overwrite: true }
         ).then((result, err) => {
             if (!err) {
-                res.send("updated successfuly");
+                res.send({result : "success"});
             }
 
             else {
-                res.send("error");
+                res.send({result : "error"});
             }
         })
     })
