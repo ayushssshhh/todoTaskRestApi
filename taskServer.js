@@ -41,7 +41,7 @@ app.route('/task/:user')
         Task.find({ username: user })
             .then((result) => {
                 if (result) {
-                    res.send({result : 'success'})
+                    res.send(result)
                 } else {
                     res.send({result : 'fail'})
                 }
