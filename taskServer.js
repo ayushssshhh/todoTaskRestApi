@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const { object } = require("webidl-conversions");
 const bodyParser = require("body-parser");
 const port = 5000;
+const cors = require("cors");
 require("dotenv").config();
 
 
