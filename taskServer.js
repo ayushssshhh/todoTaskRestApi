@@ -68,6 +68,27 @@ app.route('/task/:user')
 
     })
 
+    app.route('/task/:user/:task')
+        .get((req , res)=>{
+            const user = req.params.user
+            const work = req.params.task
+        let newTaks = new Task({
+            username: user,
+            task: work
+        })
+
+        newTaks.save()
+            .then((result, err) => {
+                if (err) {
+                    console.log("----------Error---------\n" + err);
+                    res.send({result : "fail"});
+                } else {
+                    console.log("Post Successful");
+                    res.send({result : "success"});
+                }
+            })
+        })
+
     .delete((req, res) => {
         const user = req.params.user
         Task.deleteMany({ username: user })
