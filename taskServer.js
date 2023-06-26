@@ -105,7 +105,7 @@ app.route("/task/alter/:id")
                 if(err){
                     res.send({result : err})
                 } else{
-                    res.send({result : "success"});
+                    res.send({result : result});
                 }
             })
     })
