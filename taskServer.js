@@ -97,21 +97,21 @@ app.route('/task/:user')
             })
     })
 
-app.route("/task/:user/:work")
+app.route("/task/alter/:id")
     .delete((req, res) => {
-        const user = req.params.user
-        const work = req.params.work
-        Task.deleteOne({ username: user, task: work })
+        const taskId = req.params.id
+        Task.deleteOne({id : taskId })
             .then((result) => {
                 res.send({result : "success"});
             })
     })
 
+app.route("/task/alter/:id/:user")
     .put((req, res) => {
         const user = req.params.user
-        const work = req.params.work
+        const userId = req.params.id
         Task.replaceOne(
-            { username: user, task: work },
+            { id: userId},
             {
                 username: user,
                 task: req.body.task
