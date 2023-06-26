@@ -101,8 +101,12 @@ app.route("/task/alter/:id")
     .delete((req, res) => {
         const taskId = req.params.id
         Task.deleteOne({id : taskId })
-            .then((result) => {
-                res.send({result : "success"});
+            .then((result , err) => {
+                if(err){
+                    res.send({result : err})
+                } else{
+                    res.send({result : "success"});
+                }
             })
     })
 
