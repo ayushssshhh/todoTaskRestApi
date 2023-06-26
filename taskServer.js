@@ -97,8 +97,8 @@ app.route('/task/:user')
     //         })
     // })
 
-app.route("/task/:user/:work")
-    .delete((req, res) => {
+app.route("/alter/:user/:work")
+    .get((req, res) => {
         const user = req.params.user
         const work = req.params.work
         Task.deleteOne({ username: user, task: work })
