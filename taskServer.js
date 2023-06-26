@@ -16,7 +16,7 @@ app.use(cors());
 
 // 'mongodb://127.0.0.1:27017/ToDoApp'
 
-mongoose.connect(process.env.MONGODB_URI , { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI )
     .then(() => {
         console.log("Connected to db");
     })
@@ -89,33 +89,29 @@ app.route('/task/:user')
             })
         })
 
+    // .delete((req, res) => {
+    //     const user = req.params.user
+    //     Task.deleteMany({ username: user })
+    //         .then((result) => {
+    //             res.send({result : "success"});
+    //         })
+    // })
+
+app.route("/task/:user/:work")
     .delete((req, res) => {
         const user = req.params.user
-        Task.deleteMany({ username: user })
+        const work = req.params.work
+        Task.deleteOne({ username: user, task: work })
             .then((result) => {
                 res.send({result : "success"});
             })
     })
 
-app.route("/task/alter/:id")
-    .delete((req, res) => {
-        const taskId = req.params.id
-        Task.deleteOne({id : taskId })
-            .then((result , err) => {
-                if(err){
-                    res.send({result : err})
-                } else{
-                    res.send({result : result});
-                }
-            })
-    })
-
-app.route("/task/alter/:id/:user")
     .put((req, res) => {
         const user = req.params.user
-        const userId = req.params.id
+        const work = req.params.work
         Task.replaceOne(
-            { id: userId},
+            { username: user, task: work },
             {
                 username: user,
                 task: req.body.task
