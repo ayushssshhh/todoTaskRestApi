@@ -16,7 +16,7 @@ app.use(cors());
 
 // 'mongodb://127.0.0.1:27017/ToDoApp'
 
-mongoose.connect(process.env.MONGODB_URI )
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("Connected to db");
     })
@@ -43,7 +43,7 @@ app.route('/task/:user')
                 if (result) {
                     res.send(result)
                 } else {
-                    res.send({result : 'fail'})
+                    res.send({ result: 'fail' })
                 }
             })
     })
@@ -59,19 +59,19 @@ app.route('/task/:user')
             .then((result, err) => {
                 if (err) {
                     console.log("----------Error---------\n" + err);
-                    res.send({result : "fail"});
+                    res.send({ result: "fail" });
                 } else {
                     console.log("Post Successful");
-                    res.send({result : "success"});
+                    res.send({ result: "success" });
                 }
             })
 
     })
 
-    app.route('/task/:user/:task')
-        .get((req , res)=>{
-            const user = req.params.user
-            const work = req.params.task
+app.route('/task/:user/:task')
+    .get((req, res) => {
+        const user = req.params.user
+        const work = req.params.task
         let newTaks = new Task({
             username: user,
             task: work
@@ -81,32 +81,33 @@ app.route('/task/:user')
             .then((result, err) => {
                 if (err) {
                     console.log("----------Error---------\n" + err);
-                    res.send({result : "fail"});
+                    res.send({ result: "fail" });
                 } else {
                     console.log("Post Successful");
-                    res.send({result : "success"});
+                    res.send({ result: "success" });
                 }
             })
-        })
+    })
 
-    // .delete((req, res) => {
-    //     const user = req.params.user
-    //     Task.deleteMany({ username: user })
-    //         .then((result) => {
-    //             res.send({result : "success"});
-    //         })
-    // })
+// .delete((req, res) => {
+//     const user = req.params.user
+//     Task.deleteMany({ username: user })
+//         .then((result) => {
+//             res.send({result : "success"});
+//         })
+// })
 
-app.route("/alter/:user/:work")
+app.route("/delete/:user/:work")
     .get((req, res) => {
         const user = req.params.user
         const work = req.params.work
         Task.deleteOne({ username: user, task: work })
             .then((result) => {
-                res.send({result : "success"});
+                res.send({ result: "success" });
             })
     })
 
+app.route("/alter/:user/:work/:newTask")
     .put((req, res) => {
         const user = req.params.user
         const work = req.params.work
@@ -114,16 +115,16 @@ app.route("/alter/:user/:work")
             { username: user, task: work },
             {
                 username: user,
-                task: req.body.task
+                task: req.params.newTask
             },
             { overwrite: true }
         ).then((result, err) => {
             if (!err) {
-                res.send({result : "success"});
+                res.send({ result: "success" });
             }
 
             else {
-                res.send({result : "error"});
+                res.send({ result: "error" });
             }
         })
     })
